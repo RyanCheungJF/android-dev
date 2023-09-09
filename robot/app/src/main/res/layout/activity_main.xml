@@ -33,4 +33,29 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/king_of_detroit_robot_white_large" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/leftButton"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginEnd="35dp"
+            android:src="@drawable/rot_clockwise"
+            android:background="@drawable/arrow_background" />
+
+        <ImageButton
+            android:id="@+id/rightButton"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="35dp"
+            android:src="@drawable/rot_counter"
+            android:background="@drawable/arrow_background" />
+
+    </LinearLayout>
+
 </LinearLayout>
