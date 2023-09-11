@@ -2,13 +2,15 @@ package com.example.robot
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 
 class MainActivity: AppCompatActivity() {
     private lateinit var redImage: ImageView
     private lateinit var whiteImage: ImageView
     private lateinit var yellowImage: ImageView
+    private lateinit var leftButton: ImageButton
+    private lateinit var rightButton: ImageButton
     private var turnCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,38 +20,52 @@ class MainActivity: AppCompatActivity() {
         redImage = findViewById(R.id.largeRedRobot)
         whiteImage = findViewById(R.id.largeWhiteRobot)
         yellowImage = findViewById(R.id.largeYellowRobot)
-        redImage.setOnClickListener{view: View ->
-            toggleImage()
+        leftButton = findViewById(R.id.leftButton)
+        rightButton = findViewById(R.id.rightButton)
+        leftButton.setOnClickListener{
+            toggleImage(R.id.leftButton)
         }
-        whiteImage.setOnClickListener{view: View ->
-            toggleImage()
-        }
-        yellowImage.setOnClickListener{view: View ->
-            toggleImage()
+        rightButton.setOnClickListener{
+            toggleImage(R.id.rightButton)
         }
     }
 
     // red becomes large first, then white becomes large second, then yellow the last
-    private fun toggleImage() {
-        turnCount++
+    private fun toggleImage(id: Int) {
+        if (id == R.id.leftButton) {
+            turnCount++
+        } else {
+            turnCount--
+        }
+
         if (turnCount >= 3) {
             turnCount = 0
         }
-        if (turnCount == 1) {
-            // red is large
-            redImage.setImageResource(R.drawable.king_of_detroit_robot_red_large)
-            whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_small)
-            yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_small)
-        } else if (turnCount == 2) {
-            // white is large
-            redImage.setImageResource(R.drawable.king_of_detroit_robot_red_small)
-            whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_large)
-            yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_small)
-        } else {
-            // yellow is large
-            redImage.setImageResource(R.drawable.king_of_detroit_robot_red_small)
-            whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_small)
-            yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_large)
+        if (turnCount < 0) {
+            turnCount = 2
+        }
+
+        when (turnCount) {
+            0 -> {
+                // yellow is large
+                redImage.setImageResource(R.drawable.king_of_detroit_robot_red_small)
+                whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_small)
+                yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_large)
+            }
+
+            1 -> {
+                // red is large
+                redImage.setImageResource(R.drawable.king_of_detroit_robot_red_large)
+                whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_small)
+                yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_small)
+            }
+
+            2 -> {
+                // white is large
+                redImage.setImageResource(R.drawable.king_of_detroit_robot_red_small)
+                whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_large)
+                yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_small)
+            }
         }
     }
 }
