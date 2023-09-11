@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
 
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var redImage: ImageView
     private lateinit var whiteImage: ImageView
     private lateinit var yellowImage: ImageView
@@ -22,10 +22,10 @@ class MainActivity: AppCompatActivity() {
         yellowImage = findViewById(R.id.largeYellowRobot)
         leftButton = findViewById(R.id.leftButton)
         rightButton = findViewById(R.id.rightButton)
-        leftButton.setOnClickListener{
+        leftButton.setOnClickListener {
             toggleImage(R.id.leftButton)
         }
-        rightButton.setOnClickListener{
+        rightButton.setOnClickListener {
             toggleImage(R.id.rightButton)
         }
     }
