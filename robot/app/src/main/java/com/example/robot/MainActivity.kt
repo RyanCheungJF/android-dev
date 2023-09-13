@@ -47,10 +47,10 @@ class MainActivity: AppCompatActivity() {
 
         when (turnCount) {
             0 -> {
-                // yellow is large
+                // white is large
                 redImage.setImageResource(R.drawable.king_of_detroit_robot_red_small)
-                whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_small)
-                yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_large)
+                whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_large)
+                yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_small)
             }
 
             1 -> {
@@ -61,10 +61,10 @@ class MainActivity: AppCompatActivity() {
             }
 
             2 -> {
-                // white is large
+                // yellow is large
                 redImage.setImageResource(R.drawable.king_of_detroit_robot_red_small)
-                whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_large)
-                yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_small)
+                whiteImage.setImageResource(R.drawable.king_of_detroit_robot_white_small)
+                yellowImage.setImageResource(R.drawable.king_of_detroit_robot_yellow_large)
             }
         }
     }
