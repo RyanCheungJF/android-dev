@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">persistent-ui-state</string>
+    <string name="start_message">Start the Game!</string>
+    <string name="red_robot_message">Red Robot\'s Turn</string>
+    <string name="white_robot_message">White Robot\'s Turn</string>
+    <string name="yellow_robot_message">Yellow Robot\'s Turn</string>
+</resources>
