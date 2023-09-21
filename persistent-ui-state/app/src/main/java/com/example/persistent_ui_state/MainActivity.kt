@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var messageBox: TextView
     private lateinit var robotImages: MutableList<ImageView>
 
-    private var turnCount = 0
+    private var turnCount = -1
 
     private val robots = listOf(
         Robot(
@@ -39,6 +39,45 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        redImage = findViewById(R.id.redRobot)
+        whiteImage = findViewById(R.id.whiteRobot)
+        yellowImage = findViewById(R.id.yellowRobot)
         messageBox = findViewById(R.id.messageBox)
+        robotImages = mutableListOf(redImage, whiteImage, yellowImage)
+
+        redImage.setOnClickListener { toggleImage() }
+        whiteImage.setOnClickListener { toggleImage() }
+        yellowImage.setOnClickListener { toggleImage() }
+    }
+
+    private fun updateMessageBox() {
+        messageBox.setText(robots[turnCount].robotMessageResource)
+    }
+
+    private fun setRobotTurn() {
+        for (robot in robots) {
+            robot.isRobotTurn = false
+        }
+        robots[turnCount].isRobotTurn = true
+    }
+
+    private fun setRobotImage() {
+        for (i in 0..<robots.count()) {
+            if (robots[i].isRobotTurn) {
+                robotImages[i].setImageResource(robots[i].robotLargeImageResource)
+            } else {
+                robotImages[i].setImageResource(robots[i].robotSmallImageResource)
+            }
+        }
+    }
+
+    private fun toggleImage() {
+        turnCount++
+        if (turnCount >= 3) {
+            turnCount = 0
+        }
+        updateMessageBox()
+        setRobotTurn()
+        setRobotImage()
     }
 }

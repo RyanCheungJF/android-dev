@@ -10,7 +10,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/largeYellowRobot"
+        android:id="@+id/yellowRobot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/king_of_detroit_robot_yellow_large" />
@@ -22,13 +22,13 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/largeRedRobot"
+            android:id="@+id/redRobot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/king_of_detroit_robot_red_large" />
 
         <ImageView
-            android:id="@+id/largeWhiteRobot"
+            android:id="@+id/whiteRobot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/king_of_detroit_robot_white_large" />
