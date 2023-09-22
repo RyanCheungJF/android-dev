@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 
 class MainActivity : AppCompatActivity() {
     private lateinit var redImage: ImageView
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var messageBox: TextView
     private lateinit var robotImages: MutableList<ImageView>
 
-    private var turnCount = -1
+    private val robotViewModel: RobotViewModel by viewModels()
 
     private val robots = listOf(
         Robot(
@@ -48,17 +49,24 @@ class MainActivity : AppCompatActivity() {
         redImage.setOnClickListener { toggleImage() }
         whiteImage.setOnClickListener { toggleImage() }
         yellowImage.setOnClickListener { toggleImage() }
+
+        // if turn count is not the original value, use the pre existing state
+        if (robotViewModel.turnCount != -1) {
+            updateMessageBox()
+            setRobotTurn()
+            setRobotImage()
+        }
     }
 
     private fun updateMessageBox() {
-        messageBox.setText(robots[turnCount].robotMessageResource)
+        messageBox.setText(robots[robotViewModel.turnCount].robotMessageResource)
     }
 
     private fun setRobotTurn() {
         for (robot in robots) {
             robot.isRobotTurn = false
         }
-        robots[turnCount].isRobotTurn = true
+        robots[robotViewModel.turnCount].isRobotTurn = true
     }
 
     private fun setRobotImage() {
@@ -72,10 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleImage() {
-        turnCount++
-        if (turnCount >= 3) {
-            turnCount = 0
-        }
+        robotViewModel.advanceCounter()
         updateMessageBox()
         setRobotTurn()
         setRobotImage()
