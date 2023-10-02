@@ -41,4 +41,10 @@
         android:gravity="center"
         android:text="@string/start_message"
         android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/purchaseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/purchase_button" />
 </LinearLayout>

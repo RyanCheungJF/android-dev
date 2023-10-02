@@ -2,6 +2,7 @@ package com.example.intents
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -11,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var whiteImage: ImageView
     private lateinit var yellowImage: ImageView
     private lateinit var messageBox: TextView
+    private lateinit var purchaseButton: Button
     private lateinit var robotImages: MutableList<ImageView>
 
     private val robotViewModel: RobotViewModel by viewModels()
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         whiteImage = findViewById(R.id.whiteRobot)
         yellowImage = findViewById(R.id.yellowRobot)
         messageBox = findViewById(R.id.messageBox)
+        purchaseButton = findViewById(R.id.purchaseButton)
         robotImages = mutableListOf(redImage, whiteImage, yellowImage)
 
         redImage.setOnClickListener { toggleImage() }
