@@ -5,5 +5,6 @@ data class Robot(
     val robotMessageResource: Int,
     var isRobotTurn: Boolean,
     val robotLargeImageResource: Int,
-    val robotSmallImageResource: Int
+    val robotSmallImageResource: Int,
+    var energy: Int
 )

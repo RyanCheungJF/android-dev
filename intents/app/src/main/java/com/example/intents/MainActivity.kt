@@ -2,6 +2,7 @@ package com.example.intents
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var whiteImage: ImageView
     private lateinit var yellowImage: ImageView
     private lateinit var messageBox: TextView
-    private lateinit var purchaseButton: Button
+    private lateinit var rewardButton: Button
     private lateinit var robotImages: MutableList<ImageView>
 
     private val robotViewModel: RobotViewModel by viewModels()
@@ -22,19 +23,20 @@ class MainActivity : AppCompatActivity() {
             R.string.red_robot_message,
             false,
             R.drawable.king_of_detroit_robot_red_large,
-            R.drawable.king_of_detroit_robot_red_small
-        ),
-        Robot(
+            R.drawable.king_of_detroit_robot_red_small,
+            0
+        ), Robot(
             R.string.white_robot_message,
             false,
             R.drawable.king_of_detroit_robot_white_large,
-            R.drawable.king_of_detroit_robot_white_small
-        ),
-        Robot(
+            R.drawable.king_of_detroit_robot_white_small,
+            0
+        ), Robot(
             R.string.yellow_robot_message,
             false,
             R.drawable.king_of_detroit_robot_yellow_large,
-            R.drawable.king_of_detroit_robot_yellow_small
+            R.drawable.king_of_detroit_robot_yellow_small,
+            0
         )
     )
 
@@ -46,12 +48,20 @@ class MainActivity : AppCompatActivity() {
         whiteImage = findViewById(R.id.whiteRobot)
         yellowImage = findViewById(R.id.yellowRobot)
         messageBox = findViewById(R.id.messageBox)
-        purchaseButton = findViewById(R.id.purchaseButton)
+        rewardButton = findViewById(R.id.rewardButton)
         robotImages = mutableListOf(redImage, whiteImage, yellowImage)
 
         redImage.setOnClickListener { toggleImage() }
         whiteImage.setOnClickListener { toggleImage() }
         yellowImage.setOnClickListener { toggleImage() }
+        rewardButton.setOnClickListener {
+            if (robotViewModel.turnCount == -1) {
+                robotViewModel.advanceCounter()
+            }
+            // tells activity manager to change the screen
+            val intent = RobotPurchase.newIntent(this, robots[robotViewModel.turnCount].energy)
+            startActivity(intent)
+        }
 
         // if turn count is not the original value, use the pre existing state
         if (robotViewModel.turnCount != -1) {
@@ -70,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             robot.isRobotTurn = false
         }
         robots[robotViewModel.turnCount].isRobotTurn = true
+        robots[robotViewModel.turnCount].energy += 1
     }
 
     private fun setRobotImage() {
