@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         )
     )
 
+    // passes state back from child events
     private val purchaseLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { res ->
