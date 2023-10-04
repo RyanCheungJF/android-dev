@@ -1,10 +1,13 @@
 package com.example.intents
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 
 class MainActivity : AppCompatActivity() {
@@ -20,24 +23,40 @@ class MainActivity : AppCompatActivity() {
     private val robots = listOf(
         Robot(
             R.string.red_robot_message,
+            R.string.red_robot_purchase,
             false,
             R.drawable.king_of_detroit_robot_red_large,
             R.drawable.king_of_detroit_robot_red_small,
             0
         ), Robot(
             R.string.white_robot_message,
+            R.string.white_robot_purchase,
             false,
             R.drawable.king_of_detroit_robot_white_large,
             R.drawable.king_of_detroit_robot_white_small,
             0
         ), Robot(
             R.string.yellow_robot_message,
+            R.string.yellow_robot_purchase,
             false,
             R.drawable.king_of_detroit_robot_yellow_large,
             R.drawable.king_of_detroit_robot_yellow_small,
             0
         )
     )
+
+    private val purchaseLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { res ->
+        if (res.resultCode == Activity.RESULT_OK) {
+            val rewardId = res.data?.getIntExtra(REWARD, 0)
+            val sb = StringBuilder()
+            sb.append(getString(robots[robotViewModel.turnCount].robotPurchaseResource))
+            sb.append(" ")
+            sb.append(rewardId?.let { getString(it) })
+            Toast.makeText(this, sb.toString(), Toast.LENGTH_LONG).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,9 +77,8 @@ class MainActivity : AppCompatActivity() {
                 robotViewModel.advanceCounter()
             }
             // tells activity manager to change the screen
-            val r = robots[robotViewModel.turnCount]
-            val intent = RobotPurchase.newIntent(this, r.energy, r.robotLargeImageResource)
-            startActivity(intent)
+            val intent = RobotPurchase.newIntent(this, robots[robotViewModel.turnCount])
+            purchaseLauncher.launch(intent)
         }
 
         // if turn count is not the original value, use the pre existing state

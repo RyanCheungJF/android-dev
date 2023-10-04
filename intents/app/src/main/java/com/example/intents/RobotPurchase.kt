@@ -1,5 +1,6 @@
 package com.example.intents
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +12,9 @@ import android.widget.Toast
 import kotlin.text.StringBuilder
 
 // custom key for a value, one being the energy and another being the robot image id
-const val ROBOT_ENERGY = "com.example.intents.current_robot_energy"
-const val ROBOT_IMAGE_ID = "com.example.intents.current_robot_image_id"
+private const val ROBOT_ENERGY = "com.example.intents.current_robot_energy"
+private const val ROBOT_IMAGE_ID = "com.example.intents.current_robot_image_id"
+const val REWARD = "com.example.intents.reward_chosen"
 
 class RobotPurchase : AppCompatActivity() {
     private lateinit var rewardButtonOne: Button
@@ -49,13 +51,20 @@ class RobotPurchase : AppCompatActivity() {
 
     // static method that can be invoked, for better encapsulation
     companion object {
-        fun newIntent(packageContext: Context, energy: Int, robotImageId: Int): Intent {
+        fun newIntent(packageContext: Context, robot: Robot): Intent {
             return Intent(packageContext, RobotPurchase::class.java).apply {
                 // put certain values into this kvp
-                putExtra(ROBOT_ENERGY, energy)
-                putExtra(ROBOT_IMAGE_ID, robotImageId)
+                putExtra(ROBOT_ENERGY, robot.energy)
+                putExtra(ROBOT_IMAGE_ID, robot.robotLargeImageResource)
             }
         }
+    }
+
+    private fun setPurchaseValue(rewardId: Int) {
+        val intent = Intent().apply {
+            putExtra(REWARD, rewardId)
+        }
+        setResult(Activity.RESULT_OK, intent)
     }
 
     private fun makePurchase(cost: Int, rewardId: Int) {
@@ -68,6 +77,7 @@ class RobotPurchase : AppCompatActivity() {
             sb.append(getString(rewardId))
             sb.append(" ")
             sb.append(getString(R.string.purchased))
+            setPurchaseValue(rewardId)
             Toast.makeText(this, sb.toString(), Toast.LENGTH_SHORT).show()
         }
     }

@@ -22,4 +22,7 @@
     <string name="seven">7</string>
     <string name="insufficient_energy">Insufficient Energy!</string>
     <string name="purchased">Purchased!</string>
+    <string name="red_robot_purchase">Red Robot Purchased</string>
+    <string name="white_robot_purchase">White Robot Purchased</string>
+    <string name="yellow_robot_purchase">Yellow Robot Purchased</string>
 </resources>
