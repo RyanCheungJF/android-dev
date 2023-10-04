@@ -2,7 +2,6 @@ package com.example.intents
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -59,7 +58,8 @@ class MainActivity : AppCompatActivity() {
                 robotViewModel.advanceCounter()
             }
             // tells activity manager to change the screen
-            val intent = RobotPurchase.newIntent(this, robots[robotViewModel.turnCount].energy)
+            val r = robots[robotViewModel.turnCount]
+            val intent = RobotPurchase.newIntent(this, r.energy, r.robotLargeImageResource)
             startActivity(intent)
         }
 

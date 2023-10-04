@@ -5,13 +5,13 @@
     <string name="white_robot_message">White Robot\'s Turn</string>
     <string name="yellow_robot_message">Yellow Robot\'s Turn</string>
     <string name="purchase_button">Make Purchase</string>
-    <string name="reward_a">Reward\n A</string>
-    <string name="reward_b">Reward\n B</string>
-    <string name="reward_c">Reward\n C</string>
-    <string name="reward_d">Reward\n D</string>
-    <string name="reward_e">Reward\n E</string>
-    <string name="reward_f">Reward\n F</string>
-    <string name="reward_g">Reward\n G</string>
+    <string name="reward_a">Reward A</string>
+    <string name="reward_b">Reward B</string>
+    <string name="reward_c">Reward C</string>
+    <string name="reward_d">Reward D</string>
+    <string name="reward_e">Reward E</string>
+    <string name="reward_f">Reward F</string>
+    <string name="reward_g">Reward G</string>
     <string name="zero">0</string>
     <string name="one">1</string>
     <string name="two">2</string>
@@ -20,4 +20,6 @@
     <string name="five">5</string>
     <string name="six">6</string>
     <string name="seven">7</string>
+    <string name="insufficient_energy">Insufficient Energy!</string>
+    <string name="purchased">Purchased!</string>
 </resources>
