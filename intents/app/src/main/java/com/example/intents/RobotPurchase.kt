@@ -9,12 +9,15 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import kotlin.text.StringBuilder
 
 // custom key for a value, one being the energy and another being the robot image id
-private const val ROBOT_ENERGY = "com.example.intents.current_robot_energy"
 private const val ROBOT_IMAGE_ID = "com.example.intents.current_robot_image_id"
-const val REWARD = "com.example.intents.reward_chosen"
+
+// metadata to pass back to parent
+const val ROBOT_ENERGY = "com.example.intents.current_robot_energy"
+const val REWARDS_CHOSEN = "com.example.intents.rewards_chosen"
 
 // constants
 private const val NO_OF_REWARDS = 3
@@ -29,6 +32,8 @@ class RobotPurchase : AppCompatActivity() {
     private lateinit var counterBox: TextView
     private lateinit var purchaseRobotImage: ImageView
     private var energyAvailable = 0
+
+    private var rewardsPurchased: ArrayList<Int> = ArrayList()
 
     private val rewards = mutableListOf(
         Reward(R.string.one, R.string.reward_a),
@@ -73,17 +78,19 @@ class RobotPurchase : AppCompatActivity() {
 
         rewardOneButton.setOnClickListener {
             makePurchase(
-                getString(randomRewards[0].amount).toInt(), randomRewards[0].letter
+                getString(randomRewards[0].amount).toInt(), randomRewards[0].letter, rewardOneButton
             )
         }
         rewardTwoButton.setOnClickListener {
             makePurchase(
-                getString(randomRewards[1].amount).toInt(), randomRewards[1].letter
+                getString(randomRewards[1].amount).toInt(), randomRewards[1].letter, rewardTwoButton
             )
         }
         rewardThreeButton.setOnClickListener {
             makePurchase(
-                getString(randomRewards[2].amount).toInt(), randomRewards[2].letter
+                getString(randomRewards[2].amount).toInt(),
+                randomRewards[2].letter,
+                rewardThreeButton
             )
         }
     }
@@ -99,19 +106,32 @@ class RobotPurchase : AppCompatActivity() {
         }
     }
 
-    // sends back metadata to parent
-    private fun setPurchaseValue(rewardId: Int) {
-        val intent = Intent().apply {
-            putExtra(REWARD, rewardId)
-        }
-        setResult(Activity.RESULT_OK, intent)
-    }
-
     private fun selectRewards(): List<Reward> {
         return rewards.asSequence().shuffled().take(NO_OF_REWARDS).toList().sortedBy { it.letter }
     }
 
-    private fun makePurchase(cost: Int, rewardId: Int) {
+    private fun disableButton(button: Button) {
+        button.isEnabled = false
+        button.setBackgroundColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.disabled_background
+            )
+        )
+        button.setTextColor(ContextCompat.getColor(applicationContext, R.color.disabled_text))
+    }
+
+    // sends back metadata to parent
+    private fun setPurchaseValue(rewardId: Int, energyAvailable: Int) {
+        rewardsPurchased.add(rewardId)
+        val intent = Intent().apply {
+            putIntegerArrayListExtra(REWARDS_CHOSEN, rewardsPurchased)
+            putExtra(ROBOT_ENERGY, energyAvailable)
+        }
+        setResult(Activity.RESULT_OK, intent)
+    }
+
+    private fun makePurchase(cost: Int, rewardId: Int, button: Button) {
         if (energyAvailable < cost) {
             Toast.makeText(this, R.string.insufficient_energy, Toast.LENGTH_SHORT).show()
         } else {
@@ -121,7 +141,9 @@ class RobotPurchase : AppCompatActivity() {
             sb.append(getString(rewardId))
             sb.append(" ")
             sb.append(getString(R.string.purchased))
-            setPurchaseValue(rewardId)
+
+            disableButton(button)
+            setPurchaseValue(rewardId, energyAvailable)
             Toast.makeText(this, sb.toString(), Toast.LENGTH_SHORT).show()
         }
     }
